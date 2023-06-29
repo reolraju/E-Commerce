@@ -1,6 +1,7 @@
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@mui/icons-material"
 import { useState } from "react"
 import styled from "styled-components"
+import { sliderItems } from "../data"
 
 const Container = styled.div`
     width: 100%;
@@ -32,6 +33,8 @@ const Arrow = styled.div`
 const Wrapper = styled.div`
     height: 100%;
     display: flex;
+    transition: all 1.5s ease;
+    transform: translateX(${props=>(props.index)*-100}vw);
 `
 
 const Slide = styled.div`
@@ -45,6 +48,8 @@ const Slide = styled.div`
 const ImgContainer = styled.div`
 height: 100%;
 flex:1;
+display: flex;
+justify-content: flex-end;
 `
 const Image = styled.img`
 height: 80%;
@@ -76,10 +81,15 @@ const Button = styled.button`
 `
 
 const Slider = () => {
-    const [slideINdex, setSlideIndex] = useState()
+    console.log(sliderItems)
+    const [slideIndex, setSlideIndex] = useState(0)
 
     const handleClick=(direction)=>{
-        
+        if(direction=="left"){
+            setSlideIndex(slideIndex>0 ? slideIndex-1 : 2)
+        }else{
+            setSlideIndex(slideIndex<2 ? slideIndex+1 : 0)
+        }
     }
 
   return (
@@ -87,37 +97,22 @@ const Slider = () => {
         <Arrow direction="left" onClick={()=>handleClick("left")}>
             <ArrowLeftOutlined/>
         </Arrow> 
-        <Wrapper>
-            <Slide bg="e8f5c0">
+        <Wrapper index={slideIndex}>
+            {sliderItems.map((item)=>(
+                
+            <Slide bg={item.bg} key={item.id}>
             <ImgContainer>
-                <Image src="../assets/pexels-valentin-antonucci-691640.jpg"/>
+                <Image src={item.image}/>
             </ImgContainer>
             <InfoContainer>
-                <Title>SUMMER SALE</Title>
-                <Desc>Get Flat 30% Discount!</Desc>
+                <Title>{item.title}</Title>
+                <Desc>{item.desc}</Desc>
                 <Button>Shop Now</Button>
             </InfoContainer>
             </Slide>
-            <Slide bg="a7e7f5">
-            <ImgContainer>
-                <Image src="../assets/pexels-valentin-antonucci-691640.jpg"/>
-            </ImgContainer>
-            <InfoContainer>
-                <Title>WINTER SALE</Title>
-                <Desc>Get Flat 30% Discount!</Desc>
-                <Button>Shop Now</Button>
-            </InfoContainer>
-            </Slide>
-            <Slide bg="f5a7f5">
-            <ImgContainer>
-                <Image src="../assets/pexels-valentin-antonucci-691640.jpg"/>
-            </ImgContainer>
-            <InfoContainer>
-                <Title>SPRING SALE</Title>
-                <Desc>Get Flat 30% Discount!</Desc>
-                <Button>Shop Now</Button>
-            </InfoContainer>
-            </Slide>
+                
+            ))}
+           
         </Wrapper>
         <Arrow direction="right" onClick={()=>handleClick("right")}>    
             <ArrowRightOutlined/>
