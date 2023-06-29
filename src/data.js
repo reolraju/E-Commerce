@@ -4,7 +4,7 @@ export const sliderItems = [
         image:"../assets/pexels-valentin-antonucci-691640.jpg",
         title:"SUMMER SALE",
         desc:"Flat 50% Off",
-        bg:"e5ebd6"
+        bg:"fcf5f5"
     },
     {
         id:2,
